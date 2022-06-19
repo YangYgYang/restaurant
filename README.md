@@ -16,4 +16,5 @@
 <li>使用終端機在該資料夾中安裝npm套件 npm install</li>
 <li>在安裝nodemon套件 npm install nodemon</li>
 <li>啟動本機伺服器 npm run dev</li>
+<li>即可在 http://localhost:3000/ 執行專案</li>
 </ol>
