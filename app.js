@@ -3,7 +3,7 @@ const app = express()
 const port = 3000
 
 const exphbs = require('express-handlebars')
-const restaurantData = require('./restaurant.json')
+const restaurantData = require('./models/restaurant.json')
 
 //在ROBO 3T上新增DB關掉後，會就不見了？ 
 const mongoose = require('mongoose')
