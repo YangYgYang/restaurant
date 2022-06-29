@@ -43,7 +43,13 @@
             </div>
           </div>
         </a>
-
+        <div class="crudBtn">
+    <a href="./todos/{{ this._id }}/edit">edit</a>
+        <a href="./todos/{{ this._id }}/detail">Detail</a>
+    <form action="./todos/{{ this._id }}/delete" method="POST" style="display: inline;">
+        <button type="submit">delete</button>
+    </form>
+    </div>
 
       </div>
     </div>
