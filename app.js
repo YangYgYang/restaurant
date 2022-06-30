@@ -35,6 +35,10 @@ db.once('open', () => {
     console.log('mongodb connected!')
 })
 
+//==========中介軟體 設定
+const bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({ extended: true }))
+
 //setting template engine
 app.engine('handlebars', hbs.engine)
 app.set('view engine', 'handlebars')
@@ -46,9 +50,14 @@ app.get('/', (req, res) => {
         .catch(error => { console.log('error') })
 })
 
-app.get('/restaurants/:id', (req, res) => {
-    const restaurant = restaurantData.results.find(restaurant => restaurant.id.toString() === req.params.id)
-    res.render('show', { restaurant: restaurant })
+app.get('/restaurants/:_id/detail', (req, res) => {
+    const id = req.params._id
+    restaurantModel.findById(id)
+        .lean()
+        .then((restaurant) => { res.render('show', { restaurant: restaurant }) })
+        // restaurant => restaurant.id.toString() === req.params.id)
+        .catch(error => console.log('error'))
+
 })
 
 app.get('/search', (req, res) => {
@@ -63,25 +72,38 @@ app.get('/search', (req, res) => {
 })
 
 app.get('/restaurants/:id/edit', (req, res) => {
-        // Handlebars.registerHelper('selected', function(option, value) {
-        //     console.log(option, value)
-        //     if (option === value) {
-        //         return ' selected';
-        //     } else {
-        //         return ''
-        //     }
-        // });
-        console.log('有進到edit路由')
-        const id = req.params.id
-            // console.log(restaurantModel.findById(id))
-        restaurantModel.findById(id)
-            .lean()
-            .then((restaurants) => {
-                res.render('edit', { restaurants })
-            })
-            .catch(error => console.log('error', error))
-    })
-    //res.render('edit', { restaurant }
+    console.log('有進到edit路由')
+    const id = req.params.id
+    restaurantModel.findById(id)
+        .lean()
+        .then((restaurants) => {
+            // console.log(restaurants)
+            res.render('edit', { restaurants })
+        })
+        .catch(error => console.log('error', error))
+})
+
+app.post('/restaurants/:_id/edit', (req, res) => {
+    const id = req.params._id
+    const data = req.body
+    return restaurantModel.findById(id)
+        .then((restaurants) => {
+            for (let changeKey in data) {
+                restaurants[changeKey] = data[changeKey]
+            }
+            return restaurants.save()
+        })
+        .then(() => res.redirect(`/restaurants/${id}/detail`))
+        .catch(error => console.log('error', error))
+})
+
+app.post('/restaurants/:_id/delete', (req, res) => {
+    const id = req.params._id
+    return restaurantModel.findById(id)
+        .then(restaurant => { restaurant.remove() })
+        .then(() => res.redirect('/'))
+        .catch(error => console.log(error))
+})
 
 
 
