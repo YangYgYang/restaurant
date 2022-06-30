@@ -1,0 +1,70 @@
+<div class="container" onclick="console.log('123')">
+  <form method="POST" action="/restaurants/{{restaurants._id}}/edit">
+    <div class="form-group">
+      <label for="name">餐廳名稱</label>
+      <input type="text" class="form-control" name="name" id="name" placeholder="請輸入餐廳名稱 ..." value ="{{restaurants.name}}">
+      <div class="invalid-feedback">
+        This field is required.
+      </div>
+
+      <div class="valid-feedback">
+        Good.
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label for="name_en">餐廳英文名</label>
+      <input type="text" class="form-control" name="name_en" id="name_en" placeholder="請輸入餐廳英文名 ..." value ="{{restaurants.name_en}}">
+    </div>
+
+    <div class="form-group">
+      <label for="restaurant-rating">餐廳評分</label>
+      <input type="text" class="form-control" name="restaurant-rating" id="restaurant-rating" placeholder="請輸入餐廳分數 ..." value ="{{restaurants.rating}}">
+    </div>
+
+
+    <div class="form-group">
+      <label for="adress">地址</label>
+      <input type="text" class="form-control" name="adress" id="adress" placeholder="請輸入地址 ..." value ="{{restaurants.location}}">
+    </div>
+
+    <div class="form-group">
+      <label for="tel">電話</label>
+      <input type="text" class="form-control" name="tel" id="tel" placeholder="請輸入電話 ..." value ="{{restaurants.phone}}">
+    </div>
+
+    <div class="form-group">
+      <label for="picture">餐廳環境</label>
+      <input type="text" class="form-control" name="picture" id="picture" placeholder="請輸入圖片路徑 ..." value ="{{restaurants.image}}">
+    </div>
+
+    <div class="form-group">
+      <label for="google-map">餐廳街景</label>
+      <input type="text" class="form-control" name="google-map" id="google-map" placeholder="請輸入google map路徑 ..." value ="{{restaurants.google_map}}">
+    </div>
+
+    <div class="form-group">
+      <label for="category">餐廳類型</label>
+      <select name="category" id="category">
+        <option>其他</option>
+        <option {{selected restaurants.category '日本料理'}}>日本料理</option>
+        <option {{selected restaurants.category '韓式料理'}}>韓式料理</option>
+        <option {{selected restaurants.category '中東料理'}}>中東料理</option>
+        <option {{selected restaurants.category '義式餐廳'}}>義式餐廳</option>
+        <option {{selected restaurants.category '中式料理'}}>中式料理</option>
+        <option {{selected restaurants.category '美式料理'}}>美式料理</option>
+        <option {{selected restaurants.category '酒吧'}}>酒吧</option>
+        <option {{selected restaurants.category '咖啡'}}>咖啡</option>
+      </select>
+    </div>
+
+    <d class="form-group">
+      <label for="description">餐廳簡介</label>
+      <textarea type="text" class="form-control" name="description" id="description" placeholder="請輸入餐廳簡介 ...">
+    {{restaurants.description}}
+    </textarea>
+      <p></p>
+      <button id="submit-btn" type="submit" class="btn btn-primary">送出</button>
+  </form>
+</div>

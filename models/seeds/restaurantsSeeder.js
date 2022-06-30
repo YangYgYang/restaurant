@@ -15,5 +15,4 @@ db.once('open', () => {
         restaurantModel.create(item)
     })
 
-
 })

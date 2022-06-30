@@ -18,7 +18,7 @@
 <!-- restaurant list -->
 <div class="container mt-5">
   <div class="row">
-{{#each restaurant}}
+{{#each restaurants}}
 
 <div class="col-sm-6 col-md-4 col-12">
     {{!-- <div class="col-md-10 col-12 mx-auto"> --}}
@@ -44,9 +44,9 @@
           </div>
         </a>
         <div class="crudBtn">
-    <a href="./todos/{{ this._id }}/edit">edit</a>
-        <a href="./todos/{{ this._id }}/detail">Detail</a>
-    <form action="./todos/{{ this._id }}/delete" method="POST" style="display: inline;">
+    <a href="./restaurants/{{this._id}}/edit">edit</a>
+        <a href="./restaurants/{{this._id}}/detail">Detail</a>
+    <form action="./restaurants/{{this._id}}/delete" method="POST" style="display: inline;">
         <button type="submit">delete</button>
     </form>
     </div>
