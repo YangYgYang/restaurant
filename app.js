@@ -3,7 +3,6 @@ const app = express()
 const port = 3000
 
 const exphbs = require('express-handlebars')
-    // const restaurantData = require('./models/restaurant.json')
 
 const restaurantModel = require('./models/restaurantExample')
 
@@ -23,7 +22,6 @@ const hbs = exphbs.create({
     defaultLayout: 'main'
 });
 
-// mongoose.connect('mongodb+srv://admin:1234@cluster0.0n5bj.mongodb.net/restaurant?retryWrites=true&w=majority')
 mongoose.connect(process.env.MONGODB_URL, { useNewUrlParser: true, useUnifiedTopology: true })
 
 const db = mongoose.connection
@@ -55,9 +53,7 @@ app.get('/restaurants/:_id/detail', (req, res) => {
     restaurantModel.findById(id)
         .lean()
         .then((restaurant) => { res.render('show', { restaurant: restaurant }) })
-        // restaurant => restaurant.id.toString() === req.params.id)
         .catch(error => console.log('error'))
-
 })
 
 app.get('/search', (req, res) => {
@@ -77,7 +73,6 @@ app.get('/restaurants/:id/edit', (req, res) => {
     restaurantModel.findById(id)
         .lean()
         .then((restaurants) => {
-            // console.log(restaurants)
             res.render('edit', { restaurants })
         })
         .catch(error => console.log('error', error))
@@ -102,6 +97,19 @@ app.post('/restaurants/:_id/delete', (req, res) => {
     return restaurantModel.findById(id)
         .then(restaurant => { restaurant.remove() })
         .then(() => res.redirect('/'))
+        .catch(error => console.log(error))
+})
+
+app.get('/create', (req, res) => {
+    return res.render('create')
+})
+
+app.post('/restaurants/create', (req, res) => {
+    console.log('有進到create')
+    const restaurant = req.body
+    console.log(restaurant)
+    return restaurantModel.create(restaurant)
+        .then(() => { res.redirect('/') })
         .catch(error => console.log(error))
 })
 

@@ -1,5 +1,5 @@
 <div class="container" onclick="console.log('123')">
-  <form method="POST" action="/restaurants/{{restaurants._id}}/edit">
+  <form method="POST" action="/restaurants/create">
     <div class="form-group">
       <label for="name">餐廳名稱</label>
       <input type="text" class="form-control" name="name" id="name" placeholder="請輸入餐廳名稱 ..." value ="{{restaurants.name}}">
@@ -15,38 +15,38 @@
 
     <div class="form-group">
       <label for="name_en">餐廳英文名</label>
-      <input type="text" class="form-control" name="name_en" id="name_en" placeholder="請輸入餐廳英文名 ..." value ="{{restaurants.name_en}}">
+      <input type="text" class="form-control" name="name_en" id="name_en" placeholder="請輸入餐廳英文名 ..." value ="{{restaurants.name_en}}" required>
     </div>
 
     <div class="form-group">
       <label for="rating">餐廳評分</label>
-      <input type="text" class="form-control" name="rating" id="rating" placeholder="請輸入餐廳分數 ..." value ="{{restaurants.rating}}">
+      <input type="text" class="form-control" name="rating" id="rating" placeholder="請輸入餐廳分數 ..." value ="{{restaurants.rating}}" required>
     </div>
 
 
     <div class="form-group">
       <label for="location">地址</label>
-      <input type="text" class="form-control" name="location" id="location" placeholder="請輸入地址 ..." value ="{{restaurants.location}}">
+      <input type="text" class="form-control" name="location" id="location" placeholder="請輸入地址 ..." value ="{{restaurants.location}}" required>
     </div>
 
     <div class="form-group">
       <label for="phone">電話</label>
-      <input type="text" class="form-control" name="phone" id="phone" placeholder="請輸入電話 ..." value ="{{restaurants.phone}}">
+      <input type="text" class="form-control" name="phone" id="phone" placeholder="請輸入電話 ..." value ="{{restaurants.phone}}" required>
     </div>
 
     <div class="form-group">
       <label for="image">餐廳環境</label>
-      <input type="text" class="form-control" name="image" id="image" placeholder="請輸入圖片路徑 ..." value ="{{restaurants.image}}">
+      <input type="text" class="form-control" name="image" id="image" placeholder="請輸入圖片路徑 ..." value ="{{restaurants.image}}" required>
     </div>
 
     <div class="form-group">
       <label for="google_map">餐廳街景</label>
-      <input type="text" class="form-control" name="google_map" id="google_map" placeholder="請輸入google map路徑 ..." value ="{{restaurants.google_map}}">
+      <input type="text" class="form-control" name="google_map" id="google_map" placeholder="請輸入google map路徑 ..." value ="{{restaurants.google_map}}" >
     </div>
 
     <div class="form-group">
       <label for="category">餐廳類型</label>
-      <select name="category" id="category">
+      <select name="category" id="category" required>
         <option>其他</option>
         <option {{selected restaurants.category '日本料理'}}>日本料理</option>
         <option {{selected restaurants.category '韓式料理'}}>韓式料理</option>
