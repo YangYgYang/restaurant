@@ -5,9 +5,11 @@ const db = require('../../config/mongoose')
 
 db.once('open', () => {
     let restaurantData = restaurantSeed.results
-    restaurantData.forEach((item) => {
-        console.log(item)
-        restaurantModel.create(item)
-    })
+    restaurantModel.create(restaurantData)
+        .then(() => {
+            console.log('restaurantSeeder done!')
+        })
+        .catch(err => console.log(err))
+        .finally(() => db.close())
 
 })
