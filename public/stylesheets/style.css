@@ -92,6 +92,11 @@ header {
     padding: 5px 10px;
 }
 
+.btn-sort {
+    display: flex;
+    justify-content: flex-end;
+}
+
 @media screen and (max-width: 992px) {
     .card img {
         height: 115px;
