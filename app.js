@@ -9,7 +9,6 @@ const restaurantModel = require('./models/restaurantExample')
 //在ROBO 3T上新增DB關掉後，會就不見了？ 
 const mongoose = require('mongoose')
 
-
 const hbs = exphbs.create({
     // Specify helpers which are only registered on this instance.
     helpers: {
@@ -36,10 +35,14 @@ db.once('open', () => {
 //==========中介軟體 設定
 const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: true }))
+const methodOverride = require('method-override')
 
 //setting template engine
 app.engine('handlebars', hbs.engine)
 app.set('view engine', 'handlebars')
+
+
+app.use(methodOverride('_method'))
 
 app.get('/', (req, res) => {
     restaurantModel.find()
@@ -84,7 +87,7 @@ app.get('/restaurants/:id/edit', (req, res) => {
         .catch(error => console.log('error', error))
 })
 
-app.post('/restaurants/:_id/edit', (req, res) => {
+app.put('/restaurants/:_id', (req, res) => {
     const id = req.params._id
     const data = req.body
     return restaurantModel.findById(id)
@@ -98,7 +101,7 @@ app.post('/restaurants/:_id/edit', (req, res) => {
         .catch(error => console.log('error', error))
 })
 
-app.post('/restaurants/:_id/delete', (req, res) => {
+app.delete('/restaurants/:_id', (req, res) => {
     const id = req.params._id
     return restaurantModel.findById(id)
         .then(restaurant => { restaurant.remove() })
