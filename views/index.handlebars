@@ -2,7 +2,7 @@
 <div class="container search-bar">
   <div class="search-bar-outer">
     <div class="search-bar-inner">
-      <form action="/search">
+      <form action="/restaurants/search">
         <h4 class="mb-2">尋找餐廳：</h4>
         <div class="input-group">
           <input type="text" name="keyword" value ="{{keyword}}" class="form-control" placeholder="輸入餐廳、分類" aria-label="Restaurant Name..." value="" aria-describedby="search-button">
@@ -10,7 +10,7 @@
             <button class="btn btn-major" type="submit" id="search-button"><i class="fas fa-search"></i></button>
           </div>
           <div class="d-grid gap-2">
-              <a class="btn btn-warning" href="/create">Create Restaurant</a>
+              <a class="btn btn-warning" href="/restaurants/create">Create Restaurant</a>
           </div>
         </div>
       </form>
@@ -49,9 +49,9 @@
           </div>
         </a>
         <div class="crudBtn">
-    <a href="./restaurants/{{this._id}}/edit">edit</a>
-        <a href="./restaurants/{{this._id}}/detail">Detail</a>
-    <form action="./restaurants/{{this._id}}?_method=DELETE" method="POST" style="display: inline;">
+    <a href="/restaurants/{{this._id}}/edit">edit</a>
+        <a href="/restaurants/{{this._id}}/detail">Detail</a>
+    <form action="/restaurants/{{this._id}}?_method=DELETE" method="POST" style="display: inline;">
         <button type="submit">delete</button>
     </form>
     </div>
