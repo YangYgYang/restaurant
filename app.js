@@ -27,6 +27,24 @@ const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: true }))
 const methodOverride = require('method-override')
 
+//==========connect-flash 設定
+const session = require('express-session')
+app.use(session({
+    secret: 'secret',
+    saveUninitialized: true,
+    resave: true
+}))
+
+const flash = require('connect-flash')
+app.use(flash())
+app.use((req, res, next) => {
+    res.locals.success_msg = req.flash('success_msg');
+    res.locals.error_msg = req.flash('error_msg');
+    res.locals.error = req.flash('error');
+    res.locals.user = req.user || null;
+    next();
+})
+
 //==========setting template engine
 app.engine('handlebars', hbs.engine)
 app.set('view engine', 'handlebars')

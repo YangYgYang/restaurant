@@ -10,12 +10,14 @@ const userExample = new Schema({
         type: String,
         required: true,
     },
-    pawword: {
+    password: {
         type: String,
         required: true,
     },
     createdAt: {
-        typr: Date,
+        type: Date,
         default: Date.now
     }
 })
+
+module.exports = mongoose.model('user', userExample)
