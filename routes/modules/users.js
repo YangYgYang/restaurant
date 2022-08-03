@@ -12,7 +12,7 @@ router.post('/login', (req, res) => {
         // 比對資料庫內的資料
     userModel.find({ email: userInfo.email })
         .then((findUser) => {
-            res.render('')
+            res.render('index')
         })
         .catch()
 })
@@ -35,7 +35,6 @@ router.post('/register', (req, res) => {
         })
         .catch((error) => console.log('error', error))
 })
-
 
 
 module.exports = router
