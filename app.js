@@ -45,6 +45,11 @@ app.use((req, res, next) => {
     next();
 })
 
+//==========passport
+const usePassport = require('./config/passport')
+usePassport(app)
+
+
 //==========setting template engine
 app.engine('handlebars', hbs.engine)
 app.set('view engine', 'handlebars')
