@@ -54,6 +54,10 @@ usePassport(app)
 app.engine('handlebars', hbs.engine)
 app.set('view engine', 'handlebars')
 
+//靜態資源必須在所有router前面，不然會被authenticate擋下，無法驗證
+//==========setting static files
+app.use(express.static('public'))
+
 //==========setting router
 const routes = require('./routes')
 app.use(methodOverride('_method'))
@@ -63,6 +67,3 @@ app.use(routes)
 app.listen(port, () => {
     console.log(`Express is running on http://localhost:${port}`)
 })
-
-//==========setting static files
-app.use(express.static('public'))
