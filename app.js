@@ -54,6 +54,14 @@ usePassport(app)
 app.engine('handlebars', hbs.engine)
 app.set('view engine', 'handlebars')
 
+//==========
+app.use((req, res, next) => {
+    console.log('印好多次', req.user)
+    res.locals.isAuthenticated = req.isAuthenticated()
+    res.locals.user = req.user
+    next()
+})
+
 //靜態資源必須在所有router前面，不然會被authenticate擋下，無法驗證
 //==========setting static files
 app.use(express.static('public'))
