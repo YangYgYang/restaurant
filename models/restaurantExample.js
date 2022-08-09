@@ -32,6 +32,12 @@ const restaurantSchema = new Schema({
     },
     description: {
         type: String
+    },
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: 'user',
+        index: true, //可加快 database搜尋速度(用index搜尋的意思)
+        required: true
     }
 })
 

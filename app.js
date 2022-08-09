@@ -54,7 +54,9 @@ usePassport(app)
 app.engine('handlebars', hbs.engine)
 app.set('view engine', 'handlebars')
 
-//==========
+//==========res.locals是express開的一條路徑，放在res.locals的資料，所有views都可以拿到，且每一個request-respones cycle都是獨立的，it will not be shared between requests 
+//疑問?為什麼templates直接用user，和isAuthenticated就可以拿到資料，isAuthenticated應該是從上面已引入passports拿到的，但user怎知道叫做user??
+//為什麼為印很多次？
 app.use((req, res, next) => {
     console.log('印好多次', req.user)
     res.locals.isAuthenticated = req.isAuthenticated()
