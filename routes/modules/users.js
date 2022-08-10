@@ -60,14 +60,14 @@ router.post('/register', (req, res) => {
     userModel.findOne({ email: userInfo.email })
         .then((user) => {
             // console.log('這邊印的嗎', user)
-            if (user._id) {
+            if (user !== null) {
                 console.log('使用者', user)
                 errors.push({ message: '此email已註冊過。' })
                 res.render('login', { errors })
             } else {
                 console.log('有近這邊嗎')
                 userModel.create(userInfo)
-                res.redirect('login')
+                res.redirect('/users/login')
             }
         })
         .catch((error) => console.log('error', error))
@@ -76,6 +76,7 @@ router.post('/register', (req, res) => {
 router.get('/logout', (req, res) => {
     req.logout()
     req.flash('success_msg', '你已經成功登出。')
+        //這邊會使用/user/login是因為是"/"後面接的是絕對路徑
     res.redirect('/users/login')
 })
 
