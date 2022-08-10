@@ -36,12 +36,34 @@ router.get('/register', (req, res) => {
 
 router.post('/register', (req, res) => {
     const userInfo = req.body
-    userModel.find({ email: userInfo.email })
+    const errors = []
+    console.log('userInfo', userInfo)
+    if (userInfo.name.length === 0 || userInfo.email.length === 0 || userInfo.password.length === 0 || userInfo.confirmPassword.length === 0) {
+        errors.push({ message: '所有欄位都是必填。' })
+        console.log(errors)
+    }
+    if (userInfo.password !== userInfo.confirmPassword) {
+        errors.push({ message: '密碼與確認密碼不相符！' })
+
+    }
+    if (errors.length > 0) {
+        res.render('register', {
+            errors,
+            name: userInfo.name,
+            email: userInfo.email,
+            password: userInfo.password,
+            confirmPassword: userInfo.confirmPassword
+        })
+
+    }
+
+    userModel.findOne({ email: userInfo.email })
         .then((user) => {
-            console.log('這邊印的嗎', user)
-            if (user.length !== 0) {
-                //這邊應該要改成此email已經有人用過之類的(用.flash connect-flash之類的)
-                res.render('index', user)
+            // console.log('這邊印的嗎', user)
+            if (user._id) {
+                console.log('使用者', user)
+                errors.push({ message: '此email已註冊過。' })
+                res.render('login', { errors })
             } else {
                 console.log('有近這邊嗎')
                 userModel.create(userInfo)
@@ -53,6 +75,7 @@ router.post('/register', (req, res) => {
 
 router.get('/logout', (req, res) => {
     req.logout()
+    req.flash('success_msg', '你已經成功登出。')
     res.redirect('/users/login')
 })
 

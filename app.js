@@ -54,6 +54,10 @@ usePassport(app)
 app.engine('handlebars', hbs.engine)
 app.set('view engine', 'handlebars')
 
+//靜態資源必須在所有router前面，不然會被authenticate擋下，無法驗證
+//==========setting static files
+app.use(express.static('public'))
+
 //==========res.locals是express開的一條路徑，放在res.locals的資料，所有views都可以拿到，且每一個request-respones cycle都是獨立的，it will not be shared between requests 
 //疑問?為什麼templates直接用user，和isAuthenticated就可以拿到資料，isAuthenticated應該是從上面已引入passports拿到的，但user怎知道叫做user??
 //為什麼為印很多次？
@@ -64,9 +68,7 @@ app.use((req, res, next) => {
     next()
 })
 
-//靜態資源必須在所有router前面，不然會被authenticate擋下，無法驗證
-//==========setting static files
-app.use(express.static('public'))
+
 
 //==========setting router
 const routes = require('./routes')
