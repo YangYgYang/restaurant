@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const userModel = require('../../models/userExample')
 const passport = require('passport')
+const bcrypt = require('bcryptjs')
 
 router.get('/login', (req, res) => {
     res.render('login')
@@ -50,9 +51,7 @@ router.post('/register', (req, res) => {
         res.render('register', {
             errors,
             name: userInfo.name,
-            email: userInfo.email,
-            password: userInfo.password,
-            confirmPassword: userInfo.confirmPassword
+            email: userInfo.email
         })
 
     }
@@ -63,11 +62,24 @@ router.post('/register', (req, res) => {
             if (user !== null) {
                 console.log('使用者', user)
                 errors.push({ message: '此email已註冊過。' })
+                    //注意errors的資料型態
                 res.render('login', { errors })
             } else {
-                console.log('有近這邊嗎')
-                userModel.create(userInfo)
-                res.redirect('/users/login')
+                bcrypt.genSalt(10)
+
+                .then((salt) => {
+                        return bcrypt.hash(userInfo.password, salt)
+                    })
+                    .then((hash) => {
+                        userInfo.password = hash
+                        console.log('哈希值', hash)
+                        console.log('哈希之後的使用者', userInfo)
+                    })
+                    .then(() => {
+                        console.log('有近這邊嗎', userInfo)
+                        userModel.create(userInfo)
+                        res.redirect('/users/login')
+                    })
             }
         })
         .catch((error) => console.log('error', error))
