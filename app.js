@@ -1,8 +1,12 @@
 //==========setting server
 const express = require('express')
 const app = express()
-const port = 3000
 
+
+//==========judge if is production mode
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config()
+}
 
 //==========setting handlebars config
 const exphbs = require('express-handlebars')
@@ -30,7 +34,7 @@ const methodOverride = require('method-override')
 //==========connect-flash 設定
 const session = require('express-session')
 app.use(session({
-    secret: 'secret',
+    secret: process.env.SESSION_SECRET,
     saveUninitialized: true,
     resave: true
 }))
@@ -76,6 +80,6 @@ app.use(methodOverride('_method'))
 app.use(routes)
 
 
-app.listen(port, () => {
-    console.log(`Express is running on http://localhost:${port}`)
+app.listen(process.env.PORT, () => {
+    console.log(`Express is running on http://localhost:${process.env.PORT}`)
 })

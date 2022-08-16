@@ -57,17 +57,17 @@
                 {{this.rating}}
                 <i class="fas fa-star fa-xs"></i>
               </span>
-
+          <div class="crudBtn">
+          <a href="/restaurants/{{this._id}}/edit" class="btn btn-light">Edit</a>
+          <a href="/restaurants/{{this._id}}/detail" class="btn btn-light">Detail</a>
+          <form action="/restaurants/{{this._id}}?_method=DELETE" method="POST" style="display: inline;">
+             <button type="submit" class="btn btn-danger">Delete</button>
+          </form>
+          </div>
             </div>
           </div>
         </a>
-        <div class="crudBtn">
-    <a href="/restaurants/{{this._id}}/edit">edit</a>
-        <a href="/restaurants/{{this._id}}/detail">Detail</a>
-    <form action="/restaurants/{{this._id}}?_method=DELETE" method="POST" style="display: inline;">
-        <button type="submit">delete</button>
-    </form>
-    </div>
+
 
       </div>
     </div>

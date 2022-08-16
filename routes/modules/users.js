@@ -72,11 +72,8 @@ router.post('/register', (req, res) => {
                     })
                     .then((hash) => {
                         userInfo.password = hash
-                        console.log('哈希值', hash)
-                        console.log('哈希之後的使用者', userInfo)
                     })
                     .then(() => {
-                        console.log('有近這邊嗎', userInfo)
                         userModel.create(userInfo)
                         res.redirect('/users/login')
                     })
