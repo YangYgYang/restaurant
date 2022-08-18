@@ -11,9 +11,6 @@ if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config()
 }
 //==========model
-//userSeeder result => password加密 修改原本的userseeder
-//create userseeder
-
 
 db.once('open', () => {
     let restaurantDatas = restaurantSeed.results
@@ -44,37 +41,62 @@ db.once('open', () => {
     // )
 
     userModel.create(SEED_USERS)
-        .then(async(user) => {
+        .then((users) => {
+            console.log(users)
             console.log('userSeeder is done!')
-
-            await userModel.findOne({ name: 'user1' })
-                .then(async(user1) => {
-                    console.log('有變成同步了啦')
-                    let user1RestaurantDatas = []
-                    restaurantDatas[0].userId = user1._id
-                    restaurantDatas[1].userId = user1._id
-                    restaurantDatas[2].userId = user1._id
-                    await restaurantModel.create(restaurantDatas[0], restaurantDatas[1], restaurantDatas[2])
-                        .then(() => { console.log('User1 is done!') })
-                        .catch(err => console.log(err))
-
-                })
-                .catch(err => console.log(err))
-
-            await userModel.findOne({ name: 'user2' })
-                .then(async(user2) => {
-                    restaurantDatas[3].userId = user2._id
-                    restaurantDatas[4].userId = user2._id
-                    restaurantDatas[5].userId = user2._id
-                    await restaurantModel.create(restaurantDatas[3], restaurantDatas[4], restaurantDatas[5])
-                        .then(() => { console.log('User2 is done!') })
-                        .catch(err => console.log(err))
-
+            users.map((user) => {
+                if (user.name === 'user1') {
+                    for (let i = 0; i < 3; i++) {
+                        restaurantDatas[i].userId = user._id
+                    }
+                } else if (user.name === 'user2') {
+                    for (let i = 3; i < 6; i++) {
+                        restaurantDatas[i].userId = user._id
+                    }
+                }
+            })
+            restaurantModel.create(restaurantDatas)
+                .then(() => {
+                    db.close()
+                    console.log('User1 is done!')
                 })
                 .catch(err => console.log(err))
         })
 
     .catch(err => console.log(err))
-        .finally(() => db.close())
+
+
+    //=============以下異步改同步寫法
+    // userModel.create(SEED_USERS)
+    //     .then(async(user) => {
+    //         console.log('userSeeder is done!')
+
+    //         await userModel.findOne({ name: 'user1' })
+    //             .then(async(user1) => {
+    //                 restaurantDatas[0].userId = user1._id
+    //                 restaurantDatas[1].userId = user1._id
+    //                 restaurantDatas[2].userId = user1._id
+    //                 await restaurantModel.create(restaurantDatas[0], restaurantDatas[1], restaurantDatas[2])
+    //                     .then(() => { console.log('User1 is done!') })
+    //                     .catch(err => console.log(err))
+
+    //             })
+    //             .catch(err => console.log(err))
+
+    //         await userModel.findOne({ name: 'user2' })
+    //             .then(async(user2) => {
+    //                 restaurantDatas[3].userId = user2._id
+    //                 restaurantDatas[4].userId = user2._id
+    //                 restaurantDatas[5].userId = user2._id
+    //                 await restaurantModel.create(restaurantDatas[3], restaurantDatas[4], restaurantDatas[5])
+    //                     .then(() => { console.log('User2 is done!') })
+    //                     .catch(err => console.log(err))
+
+    //             })
+    //             .catch(err => console.log(err))
+    //     })
+
+    // .catch(err => console.log(err))
+    //     .finally(() => db.close())
 
 })
