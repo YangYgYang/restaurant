@@ -28,7 +28,7 @@ module.exports = app => {
             .catch(err => done(err, false))
     }))
 
-
+    //facebook若要重複測試驗證，可至自己的帳號，取消對該應用程式的授權
     passport.use(new FacebookStrategy({
             clientID: process.env.FACEBOOK_ID,
             clientSecret: process.env.FACEBOOK_SECRET,
