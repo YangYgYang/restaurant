@@ -8,10 +8,35 @@ router.get('/login', (req, res) => {
     res.render('login')
 })
 
-router.post('/login', passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/users/login'
-}))
+router.post('/login',
+    passport.authenticate('local',
+        // function(req, res, next) {
+        //     passport.authenticate('local', function(err, user, info) {
+        //         console.log('有進這邊嗎')
+        //         if (err) {
+        //             return next(err)
+        //         }
+        //         // 找不到使用者 或 密碼錯誤
+        //         if (!user) {
+        //             req.flash(info)
+        //             return res.redirect('/user/login', { message: '測試。' })
+        //         }
+        //         req.logIn(user, function(err) {
+        //                 if (err) {
+        //                     return next(err)
+        //                 }
+        //                 console.log('給我登入喔')
+        //                 return res.redirect('/')
+        //             })
+        //             (req, res, next)
+        //     })
+        // })
+        {
+            successRedirect: '/',
+            failureRedirect: '/users/login',
+            failureFlash: true
+
+        }))
 
 //原本寫法
 // router.post('/login', (req, res) => {
@@ -30,6 +55,20 @@ router.post('/login', passport.authenticate('local', {
 //         })
 //         .catch()
 // })
+
+// function passportAuthenticate() {
+//     passport.authenticate('local', function(err, user, info) {
+//         if (err === null) {
+//             return console.log('有進到這裡啦', err)
+//         }
+//         if (!user) {
+//             return res.redirect('/login', info)
+//         }
+//         console.log('但是有進到這裡？', err)
+//         console.log(arguments)
+//         console.log('Hitting the callback');
+//     })
+// }
 
 router.get('/register', (req, res) => {
     res.render('register')

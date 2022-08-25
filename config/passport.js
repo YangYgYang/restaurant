@@ -11,22 +11,28 @@ module.exports = app => {
     app.use(passport.session())
 
     // 設定本地登入策略
-    passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
-        userExample.findOne({ email })
-            .then(user => {
-                if (!user) {
-                    return done(null, false, { message: 'That email is not registered!' })
-                }
-                return bcrypt.compare(password, user.password)
-                    .then((isMatch) => {
-                        if (!isMatch) {
-                            return done(null, false, { message: 'Email or Password incorrect.' })
-                        }
-                        return done(null, user)
-                    })
-            })
+    passport.use(new LocalStrategy({
+            usernameField: 'email',
+            // passReqToCallback: true
+        },
+        (email, password, done) => {
+            userExample.findOne({ email })
+                .then(user => {
+                    if (!user) {
+                        return done(null, false, { message: '登入不成功啦' })
+                    }
+                    return bcrypt.compare(password, user.password)
+                        .then((isMatch) => {
+                            if (!isMatch) {
+                                return done(null, false, { message: '帳號或密碼錯誤，' })
+                            }
+                            return done(null, user)
+                        })
+
+                })
+
             .catch(err => done(err, false))
-    }))
+        }))
 
     //facebook若要重複測試驗證，可至自己的帳號，取消對該應用程式的授權
     passport.use(new FacebookStrategy({
