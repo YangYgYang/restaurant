@@ -19,12 +19,12 @@ module.exports = app => {
             userExample.findOne({ email })
                 .then(user => {
                     if (!user) {
-                        return done(null, false, { message: '登入不成功啦' })
+                        return done(null, false, { message: '帳號或密碼錯誤。' })
                     }
                     return bcrypt.compare(password, user.password)
                         .then((isMatch) => {
                             if (!isMatch) {
-                                return done(null, false, { message: '帳號或密碼錯誤，' })
+                                return done(null, false, { message: '帳號或密碼錯誤。' })
                             }
                             return done(null, user)
                         })
